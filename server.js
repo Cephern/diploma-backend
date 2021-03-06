@@ -63,6 +63,7 @@ passport.deserializeUser((id, cb) => {
   User.findOne({ _id: id }, (err, user) => {
     const userInformation = {
       username: user.username,
+      fio: user.fio,
       isDoctor: user.isDoctor,
     };
 
@@ -72,7 +73,7 @@ passport.deserializeUser((id, cb) => {
 
 // Login and Registration Routes
 app.post("/register", (req, res) => {
-  const { username, password } = req.body;
+  const { username, fio, password } = req.body;
 
   User.findOne({ username }, async (err, user) => {
     if (err) throw err;
@@ -82,6 +83,7 @@ app.post("/register", (req, res) => {
 
       const newUser = new User({
         username,
+        fio,
         password: hashedPassword,
       });
 
@@ -96,6 +98,7 @@ app.post("/login", passport.authenticate("local"), (req, res) => {
 });
 
 app.get("/user", (req, res) => {
+  console.log(req.user);
   res.send(req.user);
 });
 
