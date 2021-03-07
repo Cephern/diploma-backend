@@ -10,6 +10,7 @@ const bcrypt = require("bcrypt");
 const User = require("./models/User");
 const Doctor = require("./models/Doctor");
 const Review = require("./models/Review");
+const Form = require("./models/Form");
 
 const diagnosis = require("./diagnosis");
 
@@ -98,7 +99,6 @@ app.post("/login", passport.authenticate("local"), (req, res) => {
 });
 
 app.get("/user", (req, res) => {
-  console.log(req.user);
   res.send(req.user);
 });
 
@@ -115,9 +115,26 @@ app.get("/doctors", (req, res) => {
     .then((doctors) => res.json(doctors));
 });
 
+app.get("/form", (req, res) => {
+  Form.find({ doctor: req.user.fio })
+    .then((forms) => {
+      res.json(forms);
+    })
+    .catch((err) => console.log(err));
+});
+
 app.post("/form", (req, res) => {
   const { answers, selectedDoctor, fio } = req.body;
   const diagnos = diagnosis(answers);
+
+  const form = new Form({
+    fio,
+    doctor: selectedDoctor,
+    answers,
+    diagnosis: diagnos,
+  });
+
+  form.save();
 
   res.json({
     selectedDoctor,
