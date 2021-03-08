@@ -32,13 +32,6 @@ app.use(
     credentials: true,
   })
 );
-app.options(
-  "*",
-  cors({
-    origin: "https://doc-frontend.herokuapp.com",
-    credentials: true,
-  })
-);
 app.use(
   expressSession({
     secret: "exoduslul",
