@@ -39,7 +39,10 @@ app.use(
     secret: "exoduslul",
     resave: true,
     saveUninitialized: true,
-    store: MongoStore.create({ mongooseConnection: mongoose.connections[0] }),
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://admin:123321@cluster0.lls3e.mongodb.net/diploma?retryWrites=true&w=majority",
+    }),
   })
 );
 app.use(passport.initialize());
