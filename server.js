@@ -172,6 +172,6 @@ app.post("/reviews", (req, res) => {
   newReview.save();
 });
 
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server is listening on PORT 5000");
 });
