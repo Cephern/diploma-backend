@@ -165,6 +165,10 @@ app.post("/reviews", (req, res) => {
   newReview.save();
 });
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("build"));
+}
+
 app.listen(process.env.PORT, () => {
   console.log("Server is listening on PORT 5000");
 });
