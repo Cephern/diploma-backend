@@ -5,6 +5,7 @@ const passport = require("passport");
 const passportLocal = require("passport-local");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
+const MongoStore = require("connect-mongo").default;
 const bcrypt = require("bcrypt");
 
 const User = require("./models/User");
@@ -37,6 +38,7 @@ app.use(
     secret: "exoduslul",
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create({ clientPromise }),
   })
 );
 app.use(cookieParser("exoduslul"));
