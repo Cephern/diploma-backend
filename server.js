@@ -39,7 +39,7 @@ app.use(
     secret: "exoduslul",
     resave: true,
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: MongoStore({ mongooseConnection: mongoose.connection }),
   })
 );
 app.use(passport.initialize());
