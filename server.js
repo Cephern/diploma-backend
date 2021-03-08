@@ -39,7 +39,7 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(cookieParser());
+app.use(cookieParser("exoduslul"));
 app.use(passport.initialize());
 app.use(passport.session());
 
