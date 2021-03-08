@@ -27,7 +27,10 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(
-  cors({ origin: "https://doc-frontend.herokuapp.com", credentials: true })
+  cors({
+    "Access-Control-Allow-Origin": "https://doc-frontend.herokuapp.com",
+    credentials: true,
+  })
 );
 app.use(
   expressSession({
