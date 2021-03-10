@@ -33,12 +33,17 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser());
+app.set("trust proxy", 1);
 app.use(
   expressSession({
     secret: "exoduslul",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 3600 * 24,
+      sameSite: true,
+      secure: true,
+    },
     store: MongoStore.create({
       mongoUrl:
         "mongodb+srv://admin:123321@cluster0.lls3e.mongodb.net/diploma?retryWrites=true&w=majority",
@@ -67,11 +72,11 @@ passport.use(
 );
 
 passport.serializeUser((user, cb) => {
-  cb(null, user._id);
+  cb(null, user.id);
 });
 
-passport.deserializeUser((_id, cb) => {
-  User.findOne({ _id }, (err, user) => {
+passport.deserializeUser((id, cb) => {
+  User.findOne({ _id: id }, (err, user) => {
     const userInformation = {
       username: user.username,
       fio: user.fio,
